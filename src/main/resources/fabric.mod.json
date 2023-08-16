@@ -1,0 +1,34 @@
+{
+	"schemaVersion": 1,
+	"id": "kabo-village-marker",
+	"version": "${version}",
+	"name": "Kabo Village Marker",
+	"description": "A mod to visualize where villages are in Minecraft",
+	"authors": [
+		"KaboPC",
+		"Space Walker"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/kabo-village-marker",
+		"sources": "https://github.com/SpaceWalkerRS/kabo-village-marker"
+	},
+	"license": "BSD",
+	"icon": "assets/kabo_village_marker/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"init": [
+			"kabopc.village_marker.KaboVillageMarkerMod"
+		],
+		"client-init": [
+			"kabopc.village_marker.KaboVillageMarkerMod"
+		]
+	},
+	"mixins": [
+		"kabo_village_marker.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.14.21",
+		"minecraft": "1.7.x",
+		"osl": ">=0.8.0"
+	}
+}

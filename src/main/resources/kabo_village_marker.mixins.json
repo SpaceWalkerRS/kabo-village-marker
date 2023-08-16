@@ -1,0 +1,19 @@
+{
+	"required": true,
+	"minVersion": "0.8",
+	"package": "kabopc.village_marker.mixin",
+	"compatibilityLevel": "JAVA_8",
+	"mixins": [
+		"SavedVillageDataMixin",
+		"VillageMixin"
+	],
+	"client": [
+		"GameRendererMixin",
+		"MinecraftMixin"
+	],
+	"server": [
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
