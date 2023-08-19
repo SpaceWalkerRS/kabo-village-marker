@@ -20,11 +20,7 @@ repositories {
 
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings loom.layered {
-		mappings "net.ornithemc:feather:${project.minecraft_version}+build.${project.feather_build}:v2"
-		addLayer ploceus.nestedMappings() // remove this line if not using nests
-	}
-	nests "net.ornithemc:nests:${project.minecraft_version}+build.${project.nests_build}" // remove this line if not using nests
+	mappings "net.ornithemc:feather:${project.minecraft_version}+build.${project.feather_build}:v2"
 
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 

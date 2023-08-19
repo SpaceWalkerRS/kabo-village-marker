@@ -19,7 +19,7 @@ public class KaboVillageMarkerMod implements ModInitializer, ClientModInitialize
 	@Override
 	public void init() {
 		ServerPlayNetworking.registerListener(DATA_CHANNEL, (server, handler, player, data) -> {
-			SavedVillageData villages = player.world.villages;
+			SavedVillageData villages = player.world.getVillages();
 			VillageDataAccess villageData = (VillageDataAccess)villages;
 			KaboVillageMarker marker = villageData.kvm$getMarker();
 

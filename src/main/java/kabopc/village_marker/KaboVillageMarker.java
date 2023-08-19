@@ -4,7 +4,6 @@ import java.util.List;
 
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.village.SavedVillageData;
 import net.minecraft.world.village.Village;
 import net.minecraft.world.village.VillageDoor;
@@ -33,7 +32,7 @@ public class KaboVillageMarker {
 			// TODO: the OG mod breaks all the data up into small parts
 			// apparently packets were getting too big???
 			// check if we need to do that...
-			ServerPlayNetworking.send(world.dimension.id, KaboVillageMarkerMod.DATA_CHANNEL, this::write);
+			ServerPlayNetworking.send(world.dimension.getType().getId(), KaboVillageMarkerMod.DATA_CHANNEL, this::write);
 
 			dirty = false;
 			cooldown = 400;
@@ -41,27 +40,20 @@ public class KaboVillageMarker {
 	}
 
 	public void write(PacketByteBuf buffer) {
-		@SuppressWarnings("unchecked")
 		List<Village> villages = villageData.getVillages();
 
 		buffer.writeInt(villages.size());
 
 		for (Village village : villages) {
-			BlockPos center = village.getCenter();
-			@SuppressWarnings("unchecked")
 			List<VillageDoor> doors = village.getDoors();
 
 			buffer.writeByte(village.getRadius());
-			buffer.writeInt(center.x);
-			buffer.writeInt(center.y);
-			buffer.writeInt(center.z);
+			buffer.writeBlockPos(village.getCenter());
 
 			buffer.writeInt(doors.size());
 
 			for (VillageDoor door : doors) {
-				buffer.writeInt(door.x);
-				buffer.writeInt(door.y);
-				buffer.writeInt(door.z);
+				buffer.writeBlockPos(door.getPos());
 			}
 		}
 	}
