@@ -48,7 +48,7 @@ public class KaboVillageMarkerRenderer {
 			GlStateManager.depthMask(false);
 			GlStateManager.blendFunc(GL11.GL_ONE, GL11.GL_CONSTANT_COLOR);
 			GlStateManager.color4f(color.r, color.g, color.b, color.a);
-			GlStateManager.lineWidth(2.0F);
+			GL11.glLineWidth(2.0F);
 			GL11.glPointSize(KaboVillageMarkerSettings.DOT_SIZE.get() + 1);
 
 			if (KaboVillageMarkerSettings.DRAW_VILLAGE_SPHERE.get()) {
@@ -90,10 +90,10 @@ public class KaboVillageMarkerRenderer {
 				int height = 3;
 
 				GlStateManager.disableCull();
-				GlStateManager.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 				GlStateManager.blendFunc(GL11.GL_DST_ALPHA, GL11.GL_ONE);
 				GlStateManager.color4f(color.rw, color.gw, color.bw, color.aw);
-				GlStateManager.lineWidth(2.0F);
+				GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
+				GL11.glLineWidth(2.0F);
 
 				bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormat.POSITION);
 
@@ -124,9 +124,9 @@ public class KaboVillageMarkerRenderer {
 
 				tessellator.end();
 
-				GlStateManager.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 				GlStateManager.blendFunc(GL11.GL_ONE, GL11.GL_CONSTANT_COLOR);
 				GlStateManager.color4f(color.r, color.g, color.b, color.a);
+				GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 
 				bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormat.POSITION);
 
@@ -182,7 +182,7 @@ public class KaboVillageMarkerRenderer {
 				tessellator.end();
 
 				GlStateManager.enableCull();
-				GlStateManager.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
+				GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 				GL11.glDisable(GL11.GL_LINE_STIPPLE);
 			}
 
