@@ -6,7 +6,7 @@ import java.util.List;
 import kabopc.village_marker.KaboVillageMarkerMod;
 
 import net.minecraft.network.PacketByteBuf;
-
+import net.minecraft.util.math.BlockPos;
 import net.ornithemc.osl.networking.api.client.ClientPlayNetworking;
 
 public class KaboVillageMarkerClient {
@@ -34,21 +34,17 @@ public class KaboVillageMarkerClient {
 
 		for (int i = 0; i < villageCount; i++) {
 			int radius = data.readByte();
-			int centerX = data.readInt();
-			int centerY = data.readInt();
-			int centerZ = data.readInt();
+			BlockPos center = data.readBlockPos();
 
-			VillageView village = new VillageView(radius, centerX, centerY, centerZ);
+			VillageView village = new VillageView(radius, center);
 			villages.add(village);
 
 			int doorCount = data.readInt();
 
 			for (int j = 0; j < doorCount; j++) {
-				int doorX = data.readInt();
-				int doorY = data.readInt();
-				int doorZ = data.readInt();
+				BlockPos doorPos = data.readBlockPos();
 
-				DoorView door = new DoorView(doorX, doorY, doorZ);
+				DoorView door = new DoorView(doorPos);
 				village.doors.add(door);
 			}
 		}

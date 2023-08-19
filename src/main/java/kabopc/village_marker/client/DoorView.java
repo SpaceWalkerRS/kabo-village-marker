@@ -1,14 +1,12 @@
 package kabopc.village_marker.client;
 
+import net.minecraft.util.math.BlockPos;
+
 public class DoorView {
 
-	public final int x;
-	public final int y;
-	public final int z;
+	public final BlockPos pos;
 
-	public DoorView(int x, int y, int z) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
+	public DoorView(BlockPos pos) {
+		this.pos = pos;
 	}
 }

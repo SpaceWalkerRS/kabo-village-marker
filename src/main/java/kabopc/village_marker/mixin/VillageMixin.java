@@ -24,6 +24,6 @@ public class VillageMixin {
 		)
 	)
 	private void kvm$markDirtyOnCleanUpDoors(CallbackInfo ci) {
-		((VillageDataAccess)world.villages).kvm$markDirty();
+		((VillageDataAccess)world.getVillages()).kvm$markDirty();
 	}
 }
