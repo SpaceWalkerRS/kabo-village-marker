@@ -32,7 +32,7 @@ public class KaboVillageMarker {
 			// TODO: the OG mod breaks all the data up into small parts
 			// apparently packets were getting too big???
 			// check if we need to do that...
-			ServerPlayNetworking.send(world.dimension.getType().getId(), KaboVillageMarkerMod.DATA_CHANNEL, this::write);
+			ServerPlayNetworking.send(world.dimension.getType(), KaboVillageMarkerMod.DATA_CHANNEL, this::write);
 
 			dirty = false;
 			cooldown = 400;

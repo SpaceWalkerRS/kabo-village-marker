@@ -5,6 +5,8 @@ import java.util.List;
 import org.lwjgl.opengl.GL11;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
+import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.Tessellator;
@@ -46,7 +48,7 @@ public class KaboVillageMarkerRenderer {
 			GlStateManager.enableBlend();
 			GlStateManager.disableTexture();
 			GlStateManager.depthMask(false);
-			GlStateManager.blendFunc(GL11.GL_ONE, GL11.GL_CONSTANT_COLOR);
+			GlStateManager.blendFunc(SourceFactor.ONE, DestFactor.CONSTANT_COLOR);
 			GlStateManager.color4f(color.r, color.g, color.b, color.a);
 			GlStateManager.lineWidth(2.0F);
 			GL11.glPointSize(KaboVillageMarkerSettings.DOT_SIZE.get() + 1);
@@ -91,7 +93,7 @@ public class KaboVillageMarkerRenderer {
 
 				GlStateManager.disableCull();
 				GlStateManager.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
-				GlStateManager.blendFunc(GL11.GL_DST_ALPHA, GL11.GL_ONE);
+				GlStateManager.blendFunc(SourceFactor.DST_ALPHA, DestFactor.ONE);
 				GlStateManager.color4f(color.rw, color.gw, color.bw, color.aw);
 				GlStateManager.lineWidth(2.0F);
 
@@ -125,7 +127,7 @@ public class KaboVillageMarkerRenderer {
 				tessellator.end();
 
 				GlStateManager.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
-				GlStateManager.blendFunc(GL11.GL_ONE, GL11.GL_CONSTANT_COLOR);
+				GlStateManager.blendFunc(SourceFactor.ONE, DestFactor.CONSTANT_COLOR);
 				GlStateManager.color4f(color.r, color.g, color.b, color.a);
 
 				bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormat.POSITION);

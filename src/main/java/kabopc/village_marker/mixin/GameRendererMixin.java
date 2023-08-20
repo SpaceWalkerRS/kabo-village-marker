@@ -14,14 +14,14 @@ import net.minecraft.client.render.GameRenderer;
 public class GameRendererMixin {
 
 	@Inject(
-		method = "render(IFJ)V",
+		method = "render(FJ)V",
 		at = @At(
 			value = "INVOKE",
 			shift = Shift.AFTER,
 			target = "Lnet/minecraft/client/render/world/WorldRenderer;renderMiningProgress(Lcom/mojang/blaze3d/vertex/Tessellator;Lcom/mojang/blaze3d/vertex/BufferBuilder;Lnet/minecraft/entity/Entity;F)V"
 		)
 	)
-	private void kvm$render(int anaglyphRenderPass, float tickDelta, long renderTimeLimit, CallbackInfo ci) {
+	private void kvm$render(float tickDelta, long renderTimeLimit, CallbackInfo ci) {
 		KaboVillageMarkerClient.INSTANCE.renderer.render(tickDelta);
 	}
 }

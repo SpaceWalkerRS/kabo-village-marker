@@ -4,6 +4,7 @@ import kabopc.village_marker.access.VillageDataAccess;
 import kabopc.village_marker.client.KaboVillageMarkerClient;
 import kabopc.village_marker.client.KaboVillageMarkerSettings;
 
+import net.minecraft.resource.Identifier;
 import net.minecraft.world.village.SavedVillageData;
 
 import net.ornithemc.osl.entrypoints.api.ModInitializer;
@@ -14,7 +15,7 @@ import net.ornithemc.osl.networking.api.server.ServerPlayNetworking;
 
 public class KaboVillageMarkerMod implements ModInitializer, ClientModInitializer {
 
-	public static final String DATA_CHANNEL = "KVM|Data";
+	public static final Identifier DATA_CHANNEL = new Identifier("kvm", "data");
 
 	@Override
 	public void init() {
