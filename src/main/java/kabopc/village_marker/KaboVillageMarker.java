@@ -1,8 +1,9 @@
 package kabopc.village_marker;
 
+import java.io.DataOutput;
+import java.io.IOException;
 import java.util.List;
 
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.village.SavedVillageData;
@@ -40,28 +41,28 @@ public class KaboVillageMarker {
 		}
 	}
 
-	public void write(PacketByteBuf buffer) {
+	public void write(DataOutput data) throws IOException {
 		@SuppressWarnings("unchecked")
 		List<Village> villages = villageData.getVillages();
 
-		buffer.writeInt(villages.size());
+		data.writeInt(villages.size());
 
 		for (Village village : villages) {
 			BlockPos center = village.getCenter();
 			@SuppressWarnings("unchecked")
 			List<VillageDoor> doors = village.getDoors();
 
-			buffer.writeByte(village.getRadius());
-			buffer.writeInt(center.x);
-			buffer.writeInt(center.y);
-			buffer.writeInt(center.z);
+			data.writeByte(village.getRadius());
+			data.writeInt(center.x);
+			data.writeInt(center.y);
+			data.writeInt(center.z);
 
-			buffer.writeInt(doors.size());
+			data.writeInt(doors.size());
 
 			for (VillageDoor door : doors) {
-				buffer.writeInt(door.x);
-				buffer.writeInt(door.y);
-				buffer.writeInt(door.z);
+				data.writeInt(door.x);
+				data.writeInt(door.y);
+				data.writeInt(door.z);
 			}
 		}
 	}

@@ -1,11 +1,11 @@
 package kabopc.village_marker.client;
 
+import java.io.DataInput;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import kabopc.village_marker.KaboVillageMarkerMod;
-
-import net.minecraft.network.PacketByteBuf;
 
 import net.ornithemc.osl.networking.api.client.ClientPlayNetworking;
 
@@ -29,7 +29,7 @@ public class KaboVillageMarkerClient {
 		}
 	}
 
-	public void update(PacketByteBuf data) {
+	public void update(DataInput data) throws IOException {
 		int villageCount = data.readInt();
 
 		for (int i = 0; i < villageCount; i++) {
