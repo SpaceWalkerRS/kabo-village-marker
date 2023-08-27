@@ -36,7 +36,7 @@ public class KaboVillageMarkerMod implements ModInitializer, ClientModInitialize
 	public void initClient() {
 		KaboVillageMarkerSettings.initialize();
 
-		ClientConnectionEvents.LOGIN.register(minecraft -> {
+		ClientConnectionEvents.PLAY_READY.register(minecraft -> {
 			KaboVillageMarkerClient.INSTANCE.reset(true);
 		});
 		ClientPlayNetworking.registerListener(DATA_CHANNEL, (minecraft, handler, data) -> {
