@@ -6,7 +6,6 @@ import org.lwjgl.opengl.GL11;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.Tessellator;
 
 import net.minecraft.client.Minecraft;
@@ -67,20 +66,20 @@ public class KaboVillageMarkerRenderer {
 					}
 				}
 
-				bufferBuilder.begin(GL11.GL_POINTS, DefaultVertexFormat.POSITION);
+				bufferBuilder.start(GL11.GL_POINTS);
 
 				for (int index = 0; index < intervals * (intervals / 2 + 1); index++) {
-					bufferBuilder.vertex(xs[index], ys[index], zs[index]).nextVertex();
+					bufferBuilder.vertex(xs[index], ys[index], zs[index]);
 				}
 
 				tessellator.end();
 			}
 
-			bufferBuilder.begin(GL11.GL_LINES, DefaultVertexFormat.POSITION);
+			bufferBuilder.start(GL11.GL_LINES);
 
 			for (DoorView door : doors) {
-				bufferBuilder.vertex(door.pos.getX(), door.pos.getY(), door.pos.getZ()).nextVertex();
-				bufferBuilder.vertex(center.getX(), center.getY(), center.getZ()).nextVertex();
+				bufferBuilder.vertex(door.pos.getX(), door.pos.getY(), door.pos.getZ());
+				bufferBuilder.vertex(center.getX(), center.getY(), center.getZ());
 			}
 
 			tessellator.end();
@@ -95,32 +94,32 @@ public class KaboVillageMarkerRenderer {
 				GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 				GL11.glLineWidth(2.0F);
 
-				bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormat.POSITION);
+				bufferBuilder.start(GL11.GL_QUADS);
 
-				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() - width).nextVertex();
+				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() - width);
 
 				tessellator.end();
 
@@ -128,53 +127,53 @@ public class KaboVillageMarkerRenderer {
 				GlStateManager.color4f(color.r, color.g, color.b, color.a);
 				GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 
-				bufferBuilder.begin(GL11.GL_QUADS, DefaultVertexFormat.POSITION);
+				bufferBuilder.start(GL11.GL_QUADS);
 
-				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() + width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() - width).nextVertex();
-				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() - width).nextVertex();
+				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() + width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() - height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() + width, center.getY() + height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() - width);
+				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() - width);
 
 				tessellator.end();
 
 				GL11.glEnable(GL11.GL_LINE_STIPPLE);
 				GL11.glLineStipple(5, (short)-30584);
 
-				bufferBuilder.begin(GL11.GL_LINES, DefaultVertexFormat.POSITION);
+				bufferBuilder.start(GL11.GL_LINES);
 
 				for (int w = -width; w <= width; w++) {
 					for (int h = -height; h <= height; h++) {
 						if (w == -width || w == width || h == -height || h == height) {
-							bufferBuilder.vertex(center.getX() + w, center.getY() + h, center.getZ() - width).nextVertex();
-							bufferBuilder.vertex(center.getX() + w, center.getY() + h, center.getZ() + width).nextVertex();
-							bufferBuilder.vertex(center.getX() - width, center.getY() + h, center.getZ() + w).nextVertex();
-							bufferBuilder.vertex(center.getX() + width, center.getY() + h, center.getZ() + w).nextVertex();
+							bufferBuilder.vertex(center.getX() + w, center.getY() + h, center.getZ() - width);
+							bufferBuilder.vertex(center.getX() + w, center.getY() + h, center.getZ() + width);
+							bufferBuilder.vertex(center.getX() - width, center.getY() + h, center.getZ() + w);
+							bufferBuilder.vertex(center.getX() + width, center.getY() + h, center.getZ() + w);
 						}
 					}
 					for (int l = -width; l < width; l++) {
 						if (w == -width || w == width || l == -width || l == width) {
-							bufferBuilder.vertex(center.getX() + w, center.getY() + height, center.getZ() + l).nextVertex();
-							bufferBuilder.vertex(center.getX() + w, center.getY() - height, center.getZ() + l).nextVertex();
+							bufferBuilder.vertex(center.getX() + w, center.getY() + height, center.getZ() + l);
+							bufferBuilder.vertex(center.getX() + w, center.getY() - height, center.getZ() + l);
 						}
 					}
 				}
