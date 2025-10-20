@@ -16,7 +16,6 @@ public class KaboVillageMarker {
 	private final SavedVillageData villageData;
 
 	private boolean dirty;
-	private int cooldown;
 
 	public KaboVillageMarker(ServerWorld world, SavedVillageData villageData) {
 		this.world = world;
@@ -28,14 +27,13 @@ public class KaboVillageMarker {
 	}
 
 	public void tick() {
-		if (dirty && cooldown-- == 0) {
+		if (dirty) {
 			// TODO: the OG mod breaks all the data up into small parts
 			// apparently packets were getting too big???
 			// check if we need to do that...
 			ServerPlayNetworking.send(world.dimension.getType(), KaboVillageMarkerMod.DATA_CHANNEL, this::write);
 
 			dirty = false;
-			cooldown = 400;
 		}
 	}
 
