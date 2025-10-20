@@ -30,6 +30,9 @@ public class KaboVillageMarkerClient {
 	}
 
 	public void update(DataInput data) throws IOException {
+		// TODO: send 'diff' of village data instead of ALL of it
+		villages.clear();
+
 		int villageCount = data.readInt();
 
 		for (int i = 0; i < villageCount; i++) {
