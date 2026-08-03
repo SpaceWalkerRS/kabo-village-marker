@@ -18,7 +18,7 @@ public class GameRendererMixin {
 		at = @At(
 			value = "INVOKE",
 			shift = Shift.AFTER,
-			target = "Lnet/minecraft/client/render/world/WorldRenderer;renderMiningProgress(Lcom/mojang/blaze3d/vertex/Tessellator;Lcom/mojang/blaze3d/vertex/BufferBuilder;Lnet/minecraft/entity/Entity;F)V"
+			target = "Lnet/minecraft/client/render/world/WorldRenderer;renderMiningProgress(Lnet/minecraft/client/render/vertex/Tesselator;Lnet/minecraft/client/render/vertex/BufferBuilder;Lnet/minecraft/entity/Entity;F)V"
 		)
 	)
 	private void kvm$render(float tickDelta, long renderTimeLimit, CallbackInfo ci) {

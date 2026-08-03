@@ -4,14 +4,13 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.platform.GlStateManager.DestFactor;
-import com.mojang.blaze3d.platform.GlStateManager.SourceFactor;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.Tessellator;
-
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.render.platform.GlStateManager;
+import net.minecraft.client.render.platform.GlStateManager.DestFactor;
+import net.minecraft.client.render.platform.GlStateManager.SourceFactor;
+import net.minecraft.client.render.vertex.BufferBuilder;
+import net.minecraft.client.render.vertex.DefaultVertexFormat;
+import net.minecraft.client.render.vertex.Tesselator;
 import net.minecraft.util.math.BlockPos;
 
 public class KaboVillageMarkerRenderer {
@@ -29,12 +28,12 @@ public class KaboVillageMarkerRenderer {
 			return;
 		}
 
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder bufferBuilder = tessellator.getBuilder();
+		Tesselator tesselator = Tesselator.getInstance();
+		BufferBuilder bufferBuilder = tesselator.getBuffer();
 
-		double cameraX = minecraft.getCamera().prevX + (minecraft.getCamera().x - minecraft.getCamera().prevX) * tickDelta;
-		double cameraY = minecraft.getCamera().prevY + (minecraft.getCamera().y - minecraft.getCamera().prevY) * tickDelta;
-		double cameraZ = minecraft.getCamera().prevZ + (minecraft.getCamera().z - minecraft.getCamera().prevZ) * tickDelta;
+		double cameraX = minecraft.getCamera().lastX + (minecraft.getCamera().x - minecraft.getCamera().lastX) * tickDelta;
+		double cameraY = minecraft.getCamera().lastY + (minecraft.getCamera().y - minecraft.getCamera().lastY) * tickDelta;
+		double cameraZ = minecraft.getCamera().lastZ + (minecraft.getCamera().z - minecraft.getCamera().lastZ) * tickDelta;
 
 		bufferBuilder.offset(-cameraX, -cameraY, -cameraZ);
 
@@ -75,7 +74,7 @@ public class KaboVillageMarkerRenderer {
 					bufferBuilder.vertex(xs[index], ys[index], zs[index]).nextVertex();
 				}
 
-				tessellator.end();
+				tesselator.end();
 			}
 
 			bufferBuilder.begin(GL11.GL_LINES, DefaultVertexFormat.POSITION);
@@ -85,7 +84,7 @@ public class KaboVillageMarkerRenderer {
 				bufferBuilder.vertex(center.getX(), center.getY(), center.getZ()).nextVertex();
 			}
 
-			tessellator.end();
+			tesselator.end();
 
 			if (KaboVillageMarkerSettings.DRAW_GOLEM_AREA.get()) {
 				int width = 8;
@@ -124,7 +123,7 @@ public class KaboVillageMarkerRenderer {
 				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() - width).nextVertex();
 				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() - width).nextVertex();
 
-				tessellator.end();
+				tesselator.end();
 
 				GlStateManager.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 				GlStateManager.blendFunc(SourceFactor.ONE, DestFactor.CONSTANT_COLOR);
@@ -157,7 +156,7 @@ public class KaboVillageMarkerRenderer {
 				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() - width).nextVertex();
 				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() - width).nextVertex();
 
-				tessellator.end();
+				tesselator.end();
 
 				GL11.glEnable(GL11.GL_LINE_STIPPLE);
 				GL11.glLineStipple(5, (short)-30584);
@@ -181,7 +180,7 @@ public class KaboVillageMarkerRenderer {
 					}
 				}
 
-				tessellator.end();
+				tesselator.end();
 
 				GlStateManager.enableCull();
 				GlStateManager.polygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
