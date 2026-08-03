@@ -4,10 +4,9 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import com.mojang.blaze3d.vertex.BufferBuilder;
-
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.client.render.vertex.Tesselator;
+import net.minecraft.util.math.Vec3i;
 
 public class KaboVillageMarkerRenderer {
 
@@ -24,19 +23,19 @@ public class KaboVillageMarkerRenderer {
 			return;
 		}
 
-		BufferBuilder bufferBuilder = BufferBuilder.INSTANCE;
+		Tesselator tesselator = Tesselator.INSTANCE;
 
-		double cameraX = minecraft.camera.prevX + (minecraft.camera.x - minecraft.camera.prevX) * tickDelta;
-		double cameraY = minecraft.camera.prevY + (minecraft.camera.y - minecraft.camera.prevY) * tickDelta;
-		double cameraZ = minecraft.camera.prevZ + (minecraft.camera.z - minecraft.camera.prevZ) * tickDelta;
+		double cameraX = minecraft.camera.lastX + (minecraft.camera.x - minecraft.camera.lastX) * tickDelta;
+		double cameraY = minecraft.camera.lastY + (minecraft.camera.y - minecraft.camera.lastY) * tickDelta;
+		double cameraZ = minecraft.camera.lastZ + (minecraft.camera.z - minecraft.camera.lastZ) * tickDelta;
 
-		bufferBuilder.offset(-cameraX, -cameraY, -cameraZ);
+		tesselator.offset(-cameraX, -cameraY, -cameraZ);
 
 		Color color = Color.values()[0];
 
 		for (VillageView village : marker.villages) {
 			int radius = village.radius;
-			BlockPos center = village.getCenter();
+			Vec3i center = village.getCenter();
 			List<DoorView> doors = village.doors;
 
 			GL11.glEnable(GL11.GL_BLEND);
@@ -64,23 +63,23 @@ public class KaboVillageMarkerRenderer {
 					}
 				}
 
-				bufferBuilder.start(GL11.GL_POINTS);
+				tesselator.begin(GL11.GL_POINTS);
 
 				for (int index = 0; index < intervals * (intervals / 2 + 1); index++) {
-					bufferBuilder.vertex(xs[index], ys[index], zs[index]);
+					tesselator.vertex(xs[index], ys[index], zs[index]);
 				}
 
-				bufferBuilder.end();
+				tesselator.end();
 			}
 
-			bufferBuilder.start(GL11.GL_LINES);
+			tesselator.begin(GL11.GL_LINES);
 
 			for (DoorView door : doors) {
-				bufferBuilder.vertex(door.x, door.y, door.z);
-				bufferBuilder.vertex(center.x, center.y, center.z);
+				tesselator.vertex(door.x, door.y, door.z);
+				tesselator.vertex(center.x, center.y, center.z);
 			}
 
-			bufferBuilder.end();
+			tesselator.end();
 
 			if (KaboVillageMarkerSettings.DRAW_GOLEM_AREA.get()) {
 				int width = 8;
@@ -92,91 +91,91 @@ public class KaboVillageMarkerRenderer {
 				GL11.glColor4f(color.rw, color.gw, color.bw, color.aw);
 				GL11.glLineWidth(2.0F);
 
-				bufferBuilder.start(GL11.GL_QUADS);
+				tesselator.begin(GL11.GL_QUADS);
 
-				bufferBuilder.vertex(center.x - width, center.y - height, center.z - width);
-				bufferBuilder.vertex(center.x - width, center.y - height, center.z + width);
-				bufferBuilder.vertex(center.x - width, center.y + height, center.z + width);
-				bufferBuilder.vertex(center.x - width, center.y + height, center.z - width);
-				bufferBuilder.vertex(center.x - width, center.y + height, center.z - width);
-				bufferBuilder.vertex(center.x + width, center.y + height, center.z - width);
-				bufferBuilder.vertex(center.x + width, center.y + height, center.z + width);
-				bufferBuilder.vertex(center.x - width, center.y + height, center.z + width);
-				bufferBuilder.vertex(center.x - width, center.y + height, center.z + width);
-				bufferBuilder.vertex(center.x - width, center.y - height, center.z + width);
-				bufferBuilder.vertex(center.x + width, center.y - height, center.z + width);
-				bufferBuilder.vertex(center.x + width, center.y + height, center.z + width);
-				bufferBuilder.vertex(center.x + width, center.y + height, center.z + width);
-				bufferBuilder.vertex(center.x + width, center.y + height, center.z - width);
-				bufferBuilder.vertex(center.x + width, center.y - height, center.z - width);
-				bufferBuilder.vertex(center.x + width, center.y - height, center.z + width);
-				bufferBuilder.vertex(center.x + width, center.y - height, center.z + width);
-				bufferBuilder.vertex(center.x - width, center.y - height, center.z + width);
-				bufferBuilder.vertex(center.x - width, center.y - height, center.z - width);
-				bufferBuilder.vertex(center.x + width, center.y - height, center.z - width);
-				bufferBuilder.vertex(center.x + width, center.y - height, center.z - width);
-				bufferBuilder.vertex(center.x + width, center.y + height, center.z - width);
-				bufferBuilder.vertex(center.x - width, center.y + height, center.z - width);
-				bufferBuilder.vertex(center.x - width, center.y - height, center.z - width);
+				tesselator.vertex(center.x - width, center.y - height, center.z - width);
+				tesselator.vertex(center.x - width, center.y - height, center.z + width);
+				tesselator.vertex(center.x - width, center.y + height, center.z + width);
+				tesselator.vertex(center.x - width, center.y + height, center.z - width);
+				tesselator.vertex(center.x - width, center.y + height, center.z - width);
+				tesselator.vertex(center.x + width, center.y + height, center.z - width);
+				tesselator.vertex(center.x + width, center.y + height, center.z + width);
+				tesselator.vertex(center.x - width, center.y + height, center.z + width);
+				tesselator.vertex(center.x - width, center.y + height, center.z + width);
+				tesselator.vertex(center.x - width, center.y - height, center.z + width);
+				tesselator.vertex(center.x + width, center.y - height, center.z + width);
+				tesselator.vertex(center.x + width, center.y + height, center.z + width);
+				tesselator.vertex(center.x + width, center.y + height, center.z + width);
+				tesselator.vertex(center.x + width, center.y + height, center.z - width);
+				tesselator.vertex(center.x + width, center.y - height, center.z - width);
+				tesselator.vertex(center.x + width, center.y - height, center.z + width);
+				tesselator.vertex(center.x + width, center.y - height, center.z + width);
+				tesselator.vertex(center.x - width, center.y - height, center.z + width);
+				tesselator.vertex(center.x - width, center.y - height, center.z - width);
+				tesselator.vertex(center.x + width, center.y - height, center.z - width);
+				tesselator.vertex(center.x + width, center.y - height, center.z - width);
+				tesselator.vertex(center.x + width, center.y + height, center.z - width);
+				tesselator.vertex(center.x - width, center.y + height, center.z - width);
+				tesselator.vertex(center.x - width, center.y - height, center.z - width);
 
-				bufferBuilder.end();
+				tesselator.end();
 
 				GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 				GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_CONSTANT_COLOR);
 				GL11.glColor4f(color.r, color.g, color.b, color.a);
 
-				bufferBuilder.start(GL11.GL_QUADS);
+				tesselator.begin(GL11.GL_QUADS);
 
-				bufferBuilder.vertex(center.x - width, center.y - height, center.z - width);
-				bufferBuilder.vertex(center.x - width, center.y - height, center.z + width);
-				bufferBuilder.vertex(center.x - width, center.y + height, center.z + width);
-				bufferBuilder.vertex(center.x - width, center.y + height, center.z - width);
-				bufferBuilder.vertex(center.x - width, center.y + height, center.z - width);
-				bufferBuilder.vertex(center.x + width, center.y + height, center.z - width);
-				bufferBuilder.vertex(center.x + width, center.y + height, center.z + width);
-				bufferBuilder.vertex(center.x - width, center.y + height, center.z + width);
-				bufferBuilder.vertex(center.x - width, center.y + height, center.z + width);
-				bufferBuilder.vertex(center.x - width, center.y - height, center.z + width);
-				bufferBuilder.vertex(center.x + width, center.y - height, center.z + width);
-				bufferBuilder.vertex(center.x + width, center.y + height, center.z + width);
-				bufferBuilder.vertex(center.x + width, center.y + height, center.z + width);
-				bufferBuilder.vertex(center.x + width, center.y + height, center.z - width);
-				bufferBuilder.vertex(center.x + width, center.y - height, center.z - width);
-				bufferBuilder.vertex(center.x + width, center.y - height, center.z + width);
-				bufferBuilder.vertex(center.x + width, center.y - height, center.z + width);
-				bufferBuilder.vertex(center.x - width, center.y - height, center.z + width);
-				bufferBuilder.vertex(center.x - width, center.y - height, center.z - width);
-				bufferBuilder.vertex(center.x + width, center.y - height, center.z - width);
-				bufferBuilder.vertex(center.x + width, center.y - height, center.z - width);
-				bufferBuilder.vertex(center.x + width, center.y + height, center.z - width);
-				bufferBuilder.vertex(center.x - width, center.y + height, center.z - width);
-				bufferBuilder.vertex(center.x - width, center.y - height, center.z - width);
+				tesselator.vertex(center.x - width, center.y - height, center.z - width);
+				tesselator.vertex(center.x - width, center.y - height, center.z + width);
+				tesselator.vertex(center.x - width, center.y + height, center.z + width);
+				tesselator.vertex(center.x - width, center.y + height, center.z - width);
+				tesselator.vertex(center.x - width, center.y + height, center.z - width);
+				tesselator.vertex(center.x + width, center.y + height, center.z - width);
+				tesselator.vertex(center.x + width, center.y + height, center.z + width);
+				tesselator.vertex(center.x - width, center.y + height, center.z + width);
+				tesselator.vertex(center.x - width, center.y + height, center.z + width);
+				tesselator.vertex(center.x - width, center.y - height, center.z + width);
+				tesselator.vertex(center.x + width, center.y - height, center.z + width);
+				tesselator.vertex(center.x + width, center.y + height, center.z + width);
+				tesselator.vertex(center.x + width, center.y + height, center.z + width);
+				tesselator.vertex(center.x + width, center.y + height, center.z - width);
+				tesselator.vertex(center.x + width, center.y - height, center.z - width);
+				tesselator.vertex(center.x + width, center.y - height, center.z + width);
+				tesselator.vertex(center.x + width, center.y - height, center.z + width);
+				tesselator.vertex(center.x - width, center.y - height, center.z + width);
+				tesselator.vertex(center.x - width, center.y - height, center.z - width);
+				tesselator.vertex(center.x + width, center.y - height, center.z - width);
+				tesselator.vertex(center.x + width, center.y - height, center.z - width);
+				tesselator.vertex(center.x + width, center.y + height, center.z - width);
+				tesselator.vertex(center.x - width, center.y + height, center.z - width);
+				tesselator.vertex(center.x - width, center.y - height, center.z - width);
 
-				bufferBuilder.end();
+				tesselator.end();
 
 				GL11.glEnable(GL11.GL_LINE_STIPPLE);
 				GL11.glLineStipple(5, (short)-30584);
 
-				bufferBuilder.start(GL11.GL_LINES);
+				tesselator.begin(GL11.GL_LINES);
 
 				for (int w = -width; w <= width; w++) {
 					for (int h = -height; h <= height; h++) {
 						if (w == -width || w == width || h == -height || h == height) {
-							bufferBuilder.vertex(center.x + w, center.y + h, center.z - width);
-							bufferBuilder.vertex(center.x + w, center.y + h, center.z + width);
-							bufferBuilder.vertex(center.x - width, center.y + h, center.z + w);
-							bufferBuilder.vertex(center.x + width, center.y + h, center.z + w);
+							tesselator.vertex(center.x + w, center.y + h, center.z - width);
+							tesselator.vertex(center.x + w, center.y + h, center.z + width);
+							tesselator.vertex(center.x - width, center.y + h, center.z + w);
+							tesselator.vertex(center.x + width, center.y + h, center.z + w);
 						}
 					}
 					for (int l = -width; l < width; l++) {
 						if (w == -width || w == width || l == -width || l == width) {
-							bufferBuilder.vertex(center.x + w, center.y + height, center.z + l);
-							bufferBuilder.vertex(center.x + w, center.y - height, center.z + l);
+							tesselator.vertex(center.x + w, center.y + height, center.z + l);
+							tesselator.vertex(center.x + w, center.y - height, center.z + l);
 						}
 					}
 				}
 
-				bufferBuilder.end();
+				tesselator.end();
 
 				GL11.glEnable(GL11.GL_CULL_FACE);
 				GL11.glDisable(GL11.GL_LINE_STIPPLE);
@@ -190,7 +189,7 @@ public class KaboVillageMarkerRenderer {
 			color = color.cycle();
 		}
 
-		bufferBuilder.offset(0.0D, 0.0D, 0.0D);
+		tesselator.offset(0.0D, 0.0D, 0.0D);
 	}
 
 	private enum Color {

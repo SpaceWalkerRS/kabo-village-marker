@@ -1,12 +1,12 @@
 package kabopc.village_marker.client;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import kabopc.village_marker.KaboVillageMarkerMod;
 
-import net.minecraft.network.PacketByteBuf;
-
+import net.ornithemc.osl.networking.api.PacketBuffer;
 import net.ornithemc.osl.networking.api.client.ClientPlayNetworking;
 
 public class KaboVillageMarkerClient {
@@ -29,7 +29,7 @@ public class KaboVillageMarkerClient {
 		}
 	}
 
-	public void update(PacketByteBuf data) {
+	public void update(PacketBuffer data) throws IOException {
 		// TODO: send 'diff' of village data instead of ALL of it
 		villages.clear();
 
