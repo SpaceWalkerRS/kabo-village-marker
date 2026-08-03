@@ -17,7 +17,7 @@ public class VillageMixin {
 	@Shadow private World world;
 
 	@Inject(
-		method = "cleanUpDoors",
+		method = "removeInvalidDoors",
 		at = @At(
 			value = "INVOKE",
 			target = "Lnet/minecraft/world/village/Village;updateCenterAndRadius()V"

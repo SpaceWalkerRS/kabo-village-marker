@@ -53,7 +53,7 @@ public class SavedVillageDataMixin implements VillageDataAccess {
 	}
 
 	@Inject(
-		method = "removeVillagesWithoutDoors",
+		method = "removeEmptyVillages",
 		at = @At(
 			value = "INVOKE",
 			target = "Lnet/minecraft/world/village/SavedVillageData;markDirty()V"
@@ -64,7 +64,7 @@ public class SavedVillageDataMixin implements VillageDataAccess {
 	}
 
 	@Inject(
-		method = "addDoorsToVillages",
+		method = "addPendingDoors",
 		at = @At(
 			value = "INVOKE",
 			target = "Lnet/minecraft/world/village/Village;addDoor(Lnet/minecraft/world/village/VillageDoor;)V"
@@ -75,7 +75,7 @@ public class SavedVillageDataMixin implements VillageDataAccess {
 	}
 
 	@Inject(
-		method = "addNewDoor",
+		method = "addDoor",
 		at = @At(
 			value = "INVOKE",
 			target = "Ljava/util/List;add(Ljava/lang/Object;)Z"
