@@ -4,11 +4,10 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.Tessellator;
-
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.render.platform.GlStateManager;
+import net.minecraft.client.render.vertex.BufferBuilder;
+import net.minecraft.client.render.vertex.Tesselator;
 import net.minecraft.util.math.BlockPos;
 
 public class KaboVillageMarkerRenderer {
@@ -26,12 +25,12 @@ public class KaboVillageMarkerRenderer {
 			return;
 		}
 
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder bufferBuilder = tessellator.getBuilder();
+		Tesselator tesselator = Tesselator.getInstance();
+		BufferBuilder bufferBuilder = tesselator.getBuffer();
 
-		double cameraX = minecraft.getCamera().prevX + (minecraft.getCamera().x - minecraft.getCamera().prevX) * tickDelta;
-		double cameraY = minecraft.getCamera().prevY + (minecraft.getCamera().y - minecraft.getCamera().prevY) * tickDelta;
-		double cameraZ = minecraft.getCamera().prevZ + (minecraft.getCamera().z - minecraft.getCamera().prevZ) * tickDelta;
+		double cameraX = minecraft.getCamera().lastX + (minecraft.getCamera().x - minecraft.getCamera().lastX) * tickDelta;
+		double cameraY = minecraft.getCamera().lastY + (minecraft.getCamera().y - minecraft.getCamera().lastY) * tickDelta;
+		double cameraZ = minecraft.getCamera().lastZ + (minecraft.getCamera().z - minecraft.getCamera().lastZ) * tickDelta;
 
 		bufferBuilder.offset(-cameraX, -cameraY, -cameraZ);
 
@@ -66,23 +65,23 @@ public class KaboVillageMarkerRenderer {
 					}
 				}
 
-				bufferBuilder.start(GL11.GL_POINTS);
+				bufferBuilder.begin(GL11.GL_POINTS);
 
 				for (int index = 0; index < intervals * (intervals / 2 + 1); index++) {
 					bufferBuilder.vertex(xs[index], ys[index], zs[index]);
 				}
 
-				tessellator.end();
+				tesselator.end();
 			}
 
-			bufferBuilder.start(GL11.GL_LINES);
+			bufferBuilder.begin(GL11.GL_LINES);
 
 			for (DoorView door : doors) {
 				bufferBuilder.vertex(door.pos.getX(), door.pos.getY(), door.pos.getZ());
 				bufferBuilder.vertex(center.getX(), center.getY(), center.getZ());
 			}
 
-			tessellator.end();
+			tesselator.end();
 
 			if (KaboVillageMarkerSettings.DRAW_GOLEM_AREA.get()) {
 				int width = 8;
@@ -94,7 +93,7 @@ public class KaboVillageMarkerRenderer {
 				GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);
 				GL11.glLineWidth(2.0F);
 
-				bufferBuilder.start(GL11.GL_QUADS);
+				bufferBuilder.begin(GL11.GL_QUADS);
 
 				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() - width);
 				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() + width);
@@ -121,13 +120,13 @@ public class KaboVillageMarkerRenderer {
 				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() - width);
 				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() - width);
 
-				tessellator.end();
+				tesselator.end();
 
 				GlStateManager.blendFunc(GL11.GL_ONE, GL11.GL_CONSTANT_COLOR);
 				GlStateManager.color4f(color.r, color.g, color.b, color.a);
 				GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_LINE);
 
-				bufferBuilder.start(GL11.GL_QUADS);
+				bufferBuilder.begin(GL11.GL_QUADS);
 
 				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() - width);
 				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() + width);
@@ -154,12 +153,12 @@ public class KaboVillageMarkerRenderer {
 				bufferBuilder.vertex(center.getX() - width, center.getY() + height, center.getZ() - width);
 				bufferBuilder.vertex(center.getX() - width, center.getY() - height, center.getZ() - width);
 
-				tessellator.end();
+				tesselator.end();
 
 				GL11.glEnable(GL11.GL_LINE_STIPPLE);
 				GL11.glLineStipple(5, (short)-30584);
 
-				bufferBuilder.start(GL11.GL_LINES);
+				bufferBuilder.begin(GL11.GL_LINES);
 
 				for (int w = -width; w <= width; w++) {
 					for (int h = -height; h <= height; h++) {
@@ -178,7 +177,7 @@ public class KaboVillageMarkerRenderer {
 					}
 				}
 
-				tessellator.end();
+				tesselator.end();
 
 				GlStateManager.enableCull();
 				GL11.glPolygonMode(GL11.GL_FRONT_AND_BACK, GL11.GL_FILL);

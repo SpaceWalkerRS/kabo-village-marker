@@ -1,13 +1,14 @@
 package kabopc.village_marker;
 
+import java.io.IOException;
 import java.util.List;
 
-import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.village.SavedVillageData;
 import net.minecraft.world.village.Village;
 import net.minecraft.world.village.VillageDoor;
 
+import net.ornithemc.osl.networking.api.PacketBuffer;
 import net.ornithemc.osl.networking.api.server.ServerPlayNetworking;
 
 public class KaboVillageMarker {
@@ -37,21 +38,23 @@ public class KaboVillageMarker {
 		}
 	}
 
-	public void write(PacketByteBuf buffer) {
+	public void write(PacketBuffer data) throws IOException {
+		@SuppressWarnings("unchecked")
 		List<Village> villages = villageData.getVillages();
 
-		buffer.writeInt(villages.size());
+		data.writeInt(villages.size());
 
 		for (Village village : villages) {
+			@SuppressWarnings("unchecked")
 			List<VillageDoor> doors = village.getDoors();
 
-			buffer.writeByte(village.getRadius());
-			buffer.writeBlockPos(village.getCenter());
+			data.writeByte(village.getRadius());
+			data.writeBlockPos(village.getCenter());
 
-			buffer.writeInt(doors.size());
+			data.writeInt(doors.size());
 
 			for (VillageDoor door : doors) {
-				buffer.writeBlockPos(door.getPos());
+				data.writeBlockPos(door.getPos());
 			}
 		}
 	}
