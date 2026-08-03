@@ -3,7 +3,7 @@ package kabopc.village_marker.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
 
 public class VillageView {
 
@@ -20,7 +20,7 @@ public class VillageView {
 		this.z = z;
 	}
 
-	public BlockPos getCenter() {
-		return new BlockPos(x, y, z);
+	public Vec3i getCenter() {
+		return new Vec3i(x, y, z);
 	}
 }

@@ -13,7 +13,7 @@ import net.minecraft.client.Minecraft;
 public class MinecraftMixin {
 
 	@Inject(
-		method = "teleportToDimension",
+		method = "respawnPlayer",
 		at = @At(
 			value = "HEAD"
 		)

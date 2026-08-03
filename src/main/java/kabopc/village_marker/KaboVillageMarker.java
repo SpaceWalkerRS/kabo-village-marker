@@ -1,15 +1,15 @@
 package kabopc.village_marker;
 
-import java.io.DataOutput;
 import java.io.IOException;
 import java.util.List;
 
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.village.SavedVillageData;
 import net.minecraft.world.village.Village;
 import net.minecraft.world.village.VillageDoor;
 
+import net.ornithemc.osl.networking.api.PacketBuffer;
 import net.ornithemc.osl.networking.api.server.ServerPlayNetworking;
 
 public class KaboVillageMarker {
@@ -39,14 +39,14 @@ public class KaboVillageMarker {
 		}
 	}
 
-	public void write(DataOutput data) throws IOException {
+	public void write(PacketBuffer data) throws IOException {
 		@SuppressWarnings("unchecked")
 		List<Village> villages = villageData.getVillages();
 
 		data.writeInt(villages.size());
 
 		for (Village village : villages) {
-			BlockPos center = village.getCenter();
+			Vec3i center = village.getCenter();
 			@SuppressWarnings("unchecked")
 			List<VillageDoor> doors = village.getDoors();
 
